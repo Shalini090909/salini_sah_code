@@ -1,0 +1,25 @@
+import dropbox
+
+# Replace with your Dropbox API access token
+ACCESS_TOKEN = "sl.u.AFiVPrgvr4OrBUEik1z6-_vPptd5rMfuluL75AoAfwf85Lysgk6pPWk0evys68uaeeq8Xre5mPdjgRvFswK8mPGHVHYO913Fvn4K_06pywkBLP5Ne_POVD7poYI1tIIbAfWrEjh6LSAF8moSQ5DqSzTKydk7gNoNiphYFeQnRpfEJ3DGltW0CjkaC3o9a2SExGJ7eznI2KcFXBCvNfG3LfjyI-mscKdrH5f4ho4TgSMp82SlD2h8zE-BOA8aM1RDSeQE4-1qd3jc7dmcAhhXee3z5CF_drB4c5LDNWXVGC1w0fuh0FxzWQosY60bpkwekBAhqGMsgfXUVe5UtiRsAYEkBIcSx3KoQcg7NC796kIBZE1ITnkT8t7TXsjShnv7eSOC5I0_jmByP1Z3W9FFD0u8tLX99D39Oxmf2cj7_JQt_g-BT_9OTBQKz3tHQZ1w8qiGNQjnR5FVOGB6IPdan2lHkdYQIz363twHy2OriThwABssvmDwUq68_R6K5zcW-9oN6eq0E7uCqyrwAxnaEU1gQoWrr9V85asuM4U3-Xr9HaOCf9wYug4LAhldTq95jgptINz3aOdB2oju8TFgq7KOXBo9h6moSmx0FP1ni7iLXI2lEQ8fS1a3PBKhuXmRqOtQvmGT-Wvs9rPX6XFo7Blt-NKtHSh5eCw3E8YVB_dAGMD1FfEt52oHICtwryKyYFtjubdDO8ZtVMuHDXRtP1nwTkPW99ysqwzDcW0sKfMfvoIrPVO3EwliAxjfxX1dg5jpx6yf-pJQMM0h3_kIZ_hL065kHEAs-AUchrEK9fBnJK8xXzmbL2KwE0DAskDmhFi_Jua7oLdy3-O02jV7_YD0mVKFQqfh69i_QgAUpWAm-WpVfnjbfXnR32QTl8vfkaQjC6P0KZcGBcpyt4A-lO7-0Zn8pG7nmfqXhwB3t59O-Dungc0kot0jclL9Az0n6qwJ3aA1wV867PD116U482pgA_sOknZbB0BtWpa41vJmq-mKrrDezSi4OQQPz8xvQ7U_cyHcJ2eSGfXUbdHQfx-_rR5WtWgnNylATqxmbvaLXp89ZDwK2gX0p14D4P8lcVuVfsGuu9POZwDgYzMxwigWTZl9bLEs7MMR2Wlq-JVSjmQXhZESv3xENO3H4RCv3-UcZuoBhFJfTYcaEKPJhI62L9v2HSG8axhPRUjNTkhT8sb-ERuKssdRq6XvuajajL8OvY150TSDnYFVr3Pb6Q0iq7AUJH5aDTw0kSmczXEJOINu9NM7M0WvIK6PBZ1lSITmoPHFIIC8WPEEtx9G5RxkgrTt2VA44AHn8VIgLnaItz0ovtuwPNYmSpeHURPgYJPJ4HOb8LHnPfMg6mOgIcPQA5ZQ4N1fi_CiXUiNAoSpI-1bmZSqkBiVmhbnc3oKEpfBiGDl498xZHFmQzWHvqx3ciwjPEBfFWJxiCR4G737MFvOGKng_96lzy2QNYKDVK8"
+
+# Initialize the Dropbox client
+dbx = dropbox.Dropbox(ACCESS_TOKEN)
+
+def list_files_with_timestamps(folder_path=""):
+    """ List files with modification timestamps in a given Dropbox folder. """
+    try:
+        response = dbx.files_list_folder(folder_path)
+
+        for entry in response.entries:
+            if isinstance(entry, dropbox.files.FileMetadata):
+                print(f"File: {entry.name}")
+                print(f"Client Modified: {entry.client_modified}")
+                print(f"Server Modified: {entry.server_modified}")
+                print("-" * 40)
+
+    except dropbox.exceptions.ApiError as e:
+        print(f"API Error: {e}")
+
+# Call the function for the root folder
+list_files_with_timestamps("")
