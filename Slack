@@ -1,0 +1,23 @@
+import os
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+
+# Set your Slack API token
+SLACK_TOKEN = "xoxb-your-access-token"
+
+# Initialize client
+client = WebClient(token=SLACK_TOKEN)
+
+# Replace with your Slack channel ID
+channel_id = "CXXXXXXXX"
+
+def fetch_messages(channel_id):
+    try:
+        response = client.conversations_history(channel=channel_id)
+        messages = response["messages"]
+        for msg in messages:
+            print(f"Timestamp: {msg['ts']}, User: {msg.get('user')}, Text: {msg['text']}")
+    except SlackApiError as e:
+        print(f"Error fetching messages: {e.response['error']}")
+
+fetch_messages(channel_id)
